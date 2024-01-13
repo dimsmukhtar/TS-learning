@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 import express, { Application, NextFunction, Request, Response } from 'express'
 
 const app: Application = express()
