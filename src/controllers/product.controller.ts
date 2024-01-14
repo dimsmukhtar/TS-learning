@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { logger } from '../utils/logger'
 import { createProductValidation } from '../validations/product.validation'
-import { addProductToDB, getProductFromDB } from '../services/product.service'
+import { addProductToDB, getProductByIdFromDB, getProductFromDB } from '../services/product.service'
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   req.body.product_id = uuidv4()
@@ -32,11 +32,32 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 }
 
 export const getAllProduct = async (req: Request, res: Response, next: NextFunction) => {
-  const products = await getProductFromDB()
-  logger.info('Product get all product')
+  const products: any = await getProductFromDB()
+  logger.info('Success get all product')
   return res.status(200).json({
     success: true,
     message: 'Success',
     data: products
   })
+}
+
+export const getProductById = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params
+  if (id) {
+    const product = await getProductByIdFromDB(id)
+    logger.info('Success get product by id')
+    return res.status(200).json({
+      success: true,
+      message: 'Success get product by id',
+      data: product
+    })
+  } else {
+    const products: any = await getProductFromDB()
+    logger.info('Success get all product')
+    return res.status(200).json({
+      success: true,
+      message: 'Success get all producs',
+      data: products
+    })
+  }
 }

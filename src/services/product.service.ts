@@ -17,3 +17,7 @@ export const getProductFromDB = async () => {
 export const addProductToDB = async (payload: ProductInterface) => {
   return await productModel.create(payload)
 }
+
+export const getProductByIdFromDB = async (id: string) => {
+  return await productModel.findOne({ product_id: id })
+}
