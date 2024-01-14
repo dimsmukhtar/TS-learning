@@ -1,6 +1,6 @@
 import { logger } from '../utils/logger'
 import productModel from '../models/product.model'
-import { ProductInterface } from '../interface/product.interface'
+import ProductInterface from '../types/product.type'
 
 export const getProductFromDB = async () => {
   return await productModel
@@ -14,14 +14,6 @@ export const getProductFromDB = async () => {
     })
 }
 
-export const createProductToDB = async (payload: ProductInterface) => {
-  return await productModel
-    .create(payload)
-    .then((data) => {
-      return data
-    })
-    .catch((error) => {
-      logger.info('Error service createProductToDB')
-      logger.error(error)
-    })
+export const addProductToDB = async (payload: ProductInterface) => {
+  return await productModel.create(payload)
 }
