@@ -1,8 +1,9 @@
 import express, { Application } from 'express'
-import { routes } from './routes'
-import { logger } from './utils/logger'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+
+import { routes } from './routes'
+import { logger } from './utils/logger'
 
 const app: Application = express()
 
