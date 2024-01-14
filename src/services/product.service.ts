@@ -23,7 +23,7 @@ export const getProductByIdFromDB = async (id: string) => {
 }
 
 export const updateProductById = async (id: string, payload: ProductInterface) => {
-  return await productModel.findOneAndUpdate(
+  const result = await productModel.findOneAndUpdate(
     {
       product_id: id
     },
@@ -31,4 +31,12 @@ export const updateProductById = async (id: string, payload: ProductInterface) =
       $set: payload
     }
   )
+  return result
+}
+
+export const deleteProductById = async (id: string) => {
+  const result = await productModel.findOneAndDelete({
+    product_id: id
+  })
+  return result
 }
