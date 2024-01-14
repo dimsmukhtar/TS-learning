@@ -21,3 +21,14 @@ export const addProductToDB = async (payload: ProductInterface) => {
 export const getProductByIdFromDB = async (id: string) => {
   return await productModel.findOne({ product_id: id })
 }
+
+export const updateProductById = async (id: string, payload: ProductInterface) => {
+  return await productModel.findOneAndUpdate(
+    {
+      product_id: id
+    },
+    {
+      $set: payload
+    }
+  )
+}

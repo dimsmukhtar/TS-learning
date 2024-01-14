@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { logger } from '../utils/logger'
-import { createProductValidation } from '../validations/product.validation'
-import { addProductToDB, getProductByIdFromDB, getProductFromDB } from '../services/product.service'
+import { createProductValidation, updateProductValidation } from '../validations/product.validation'
+import { addProductToDB, getProductByIdFromDB, getProductFromDB, updateProductById } from '../services/product.service'
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   req.body.product_id = uuidv4()
@@ -58,6 +58,32 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
       success: true,
       message: 'Success get all producs',
       data: products
+    })
+  }
+}
+
+export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params
+  const { error, value } = updateProductValidation(req.body)
+  if (error) {
+    logger.error('ERR = product - update', error.details[0].message)
+    return res.status(422).json({
+      success: false,
+      message: error.details[0].message
+    })
+  }
+  try {
+    await updateProductById(id, value)
+    logger.info('Success update by id')
+    return res.status(200).json({
+      success: true,
+      message: 'Success update product by id'
+    })
+  } catch (error) {
+    logger.error('ERR = product - update', error)
+    return res.status(422).json({
+      success: false,
+      message: error
     })
   }
 }
