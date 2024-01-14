@@ -5,6 +5,9 @@ import cors from 'cors'
 import { routes } from './routes'
 import { logger } from './utils/logger'
 
+// connect to MongoDB
+import './utils/connectToDB'
+
 const app: Application = express()
 
 const PORT: number = 3000
